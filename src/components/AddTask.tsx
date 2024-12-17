@@ -10,8 +10,8 @@ import { userIdSelector, userState } from '@/store/atoms/userAtom'*/
 
 export const AddTask = () => {
   return (
-    <main className="flex items-center">
-      <h1 className="text-3xl font-bold underline">Create New Task</h1>
+    <main className="flex items-center justify-center">
+      <h1 className="text-5xl font-bold underline">Create New Task</h1>
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base/7 font-semibold text-gray-900">
