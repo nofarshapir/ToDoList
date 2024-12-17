@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: poppins;
+  color: black;
+}
+#root {
+  min-height: 100vh;
+  display: flex;
+  background: var(--bg-color);
+}
