@@ -9,6 +9,7 @@ import { FiTrash2 } from "react-icons/fi";
 import { HiOutlineSave } from "react-icons/hi";
 import { Task } from "../types/task";
 import { AddTask } from "./AddTask";
+import { getTasks } from "../services/taskService";
 
 export const Feed = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -18,12 +19,22 @@ export const Feed = () => {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  // Load tasks from localStorage
+  /* Load tasks from localStorage
   useEffect(() => {
     const storedTodos = JSON.parse(localStorage.getItem("tasks") || "[]");
     if (storedTodos.length) {
       setTasks(storedTodos);
     }
+  }, []);
+*/
+  //fetch tasks from mysql db
+  useEffect(() => {
+    const fetchTasks = async () => {
+      const tasksFromApi = await getTasks();
+      setTasks(tasksFromApi);
+    };
+
+    fetchTasks();
   }, []);
 
   // Save tasks to localStorage whenever they change
@@ -95,24 +106,28 @@ export const Feed = () => {
                 <>
                   <input
                     type="text"
-                    value={task.taskTitle}
+                    value={task.title}
                     onChange={(e) =>
-                      handleEditInputChange(e.target.value, "taskTitle", index)
+                      handleEditInputChange(e.target.value, "title", index)
                     }
-                    className="text-2xl font-semibold bg-inherit border "
+                    className="text-2xl font-semibold bg-white border "
                   />
                   <textarea
-                    value={task.taskDesc}
+                    value={task.description}
                     onChange={(e) =>
-                      handleEditInputChange(e.target.value, "taskDesc", index)
+                      handleEditInputChange(
+                        e.target.value,
+                        "description",
+                        index
+                      )
                     }
-                    className="text-xl bg-inherit"
+                    className="text-xl bg-white"
                   />
                 </>
               ) : (
                 <>
-                  <h3 className="text-2xl font-semibold">{task.taskTitle}</h3>
-                  <p className="text-xl">{task.taskDesc}</p>
+                  <h3 className="text-2xl font-semibold">{task.title}</h3>
+                  <p className="text-xl">{task.description}</p>
                 </>
               )}
             </div>
